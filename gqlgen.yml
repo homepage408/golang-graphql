@@ -1,0 +1,21 @@
+schema:
+  - graph/schema/*.graphql
+
+exec:
+  filename: graph/generated.go
+  package: graph
+
+model:
+  filename: graph/model/generated.go
+  package: model
+
+resolver:
+  layout: follow-schema
+  dir: graph/resolver
+  package: resolver
+autobind: []
+
+
+models:
+  User:
+    model: "github.com/golang-graphql/graph/model.AbstracModel"
