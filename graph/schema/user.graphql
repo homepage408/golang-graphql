@@ -1,0 +1,21 @@
+type User {
+    GetUser(param: GetUserParam): UserResponseOK
+}
+
+union UserResponseOK = UserResponse | Error
+
+input GetUserParam {
+    ID: Int
+}
+
+type UserResponse {
+    ID: Int
+    name: String
+    email: String
+    alamat: String
+}
+
+type Error {
+    message: String
+    success: Boolean
+}
