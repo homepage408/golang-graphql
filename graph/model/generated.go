@@ -2,26 +2,34 @@
 
 package model
 
-type UserResponseOk interface {
-	IsUserResponseOk()
-}
-
-type Error struct {
-	Message *string `json:"message"`
-	Success *bool   `json:"success"`
-}
-
-func (Error) IsUserResponseOk() {}
-
 type GetUserParam struct {
-	ID *int `json:"ID"`
+	ID *int `json:"ID,omitempty"`
 }
 
-type UserResponse struct {
-	ID     *int    `json:"ID"`
-	Name   *string `json:"name"`
-	Email  *string `json:"email"`
-	Alamat *string `json:"alamat"`
+type MainResponse struct {
+	IsSuccess bool              `json:"isSuccess"`
+	Message   string            `json:"message"`
+	Data      *UserDataResponse `json:"data,omitempty"`
+	Status    int               `json:"status"`
 }
 
-func (UserResponse) IsUserResponseOk() {}
+type MainResponseList struct {
+	IsSuccess bool                `json:"isSuccess"`
+	Message   string              `json:"message"`
+	Data      []*UserDataResponse `json:"data,omitempty"`
+	Status    int                 `json:"status"`
+}
+
+type SignInParams struct {
+	Name     string  `json:"name"`
+	Email    string  `json:"email"`
+	Password string  `json:"password"`
+	Address  *string `json:"address,omitempty"`
+}
+
+type UserDataResponse struct {
+	ID      *string `json:"Id,omitempty"`
+	Name    *string `json:"name,omitempty"`
+	Email   *string `json:"email,omitempty"`
+	Address *string `json:"address,omitempty"`
+}

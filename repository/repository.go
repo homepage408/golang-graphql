@@ -7,11 +7,14 @@ import (
 )
 
 type Repository interface {
-	CreateUser(ctx context.Context, input query.CreateUserParams) error
+	CreateUser(ctx context.Context, input query.CreateUserParams) (*query.CreateUserRow, error)
 	GetDetailUser(ctx context.Context, input query.GetUserDetailRow) error
 }
 
 type repository struct {
+	qry query.Queries
 }
 
-func NewRepository(ctx context.Context)
+func NewRepository(q *query.Queries) *repository {
+	return &repository{qry: *q}
+}

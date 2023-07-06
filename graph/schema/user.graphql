@@ -1,21 +1,22 @@
 type User {
-    GetUser(param: GetUserParam): UserResponseOK
+    SignIn(param: SignInParams): MainResponse!
+    GetUser(param: GetUserParam): MainResponseList!
 }
-
-union UserResponseOK = UserResponse | Error
 
 input GetUserParam {
     ID: Int
 }
 
-type UserResponse {
-    ID: Int
-    name: String
-    email: String
-    alamat: String
+input SignInParams {
+    name: String!
+    email: String!
+    password: String!
+    address: String
 }
 
-type Error {
-    message: String
-    success: Boolean
+type UserDataResponse {
+    Id: String
+    name: String
+    email: String
+    address: String
 }
