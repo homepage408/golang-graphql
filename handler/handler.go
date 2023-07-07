@@ -1,22 +1,49 @@
 package handler
 
 import (
-	"context"
+	"os"
+	"sync"
 
+	"github.com/golang-graphql/connection"
+	"github.com/golang-graphql/repository"
+	"github.com/golang-graphql/repository/postgres/query"
 	"github.com/golang-graphql/usecase"
 )
 
-type Handler interface {
-	CreateUser(ctx context.Context)
-	GetDetailUser(ctx context.Context)
+var uc usecase.Usecase
+var ucOnce sync.Once
+var saltText = os.Getenv("SALT_PASSWORD")
+
+func GetUsecase() usecase.Usecase {
+	ucOnce.Do(func() {
+		uc = usecase.NewUsecase(
+			getRepository(),
+			saltText,
+		)
+	})
+
+	return uc
 }
 
-type handler struct {
-	usecase usecase.Usecase
+var repo repository.Repository
+var repoOnce sync.Once
+
+func getRepository() repository.Repository {
+	repoOnce.Do(func() {
+		conn := connection.NewPostgresConnection()
+		repo = repository.NewRepository(getQuery(conn))
+	})
+
+	return repo
 }
 
-func NewHandler(uc usecase.Usecase) *handler {
-	return &handler{
-		usecase: uc,
-	}
+var qry *query.Queries
+var oneQuery sync.Once
+
+func getQuery(conn connection.Connection) *query.Queries {
+	oneQuery.Do(func() {
+		qry = query.New(conn.DB())
+	})
+
+	return qry
 }

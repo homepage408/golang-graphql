@@ -2,10 +2,6 @@
 
 package model
 
-type GetUserParam struct {
-	ID *int `json:"ID,omitempty"`
-}
-
 type MainResponse struct {
 	IsSuccess bool              `json:"isSuccess"`
 	Message   string            `json:"message"`

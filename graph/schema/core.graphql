@@ -1,5 +1,9 @@
 type Query {
-    User: User!
+    User: UserQuery!
+}
+
+type Mutation {
+    User: UserMutation!
 }
 
 type MainResponse {

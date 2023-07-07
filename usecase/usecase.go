@@ -9,7 +9,7 @@ import (
 
 type Usecase interface {
 	CreateUser(ctx context.Context, input *model.SignInParams) (*model.MainResponse, error)
-	GetDetailUser(ctx context.Context, input *model.GetUserParam) (*model.MainResponseList, error)
+	GetDetailUser(ctx context.Context, input int32) (*model.MainResponse, error)
 }
 
 type usecase struct {

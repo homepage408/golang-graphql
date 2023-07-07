@@ -11,7 +11,7 @@ import (
 )
 
 const createUser = `-- name: CreateUser :one
-Insert into users (name, email, password, address) values($1,$2,$3,$4) RETURNING name, email, address
+Insert into users (name, email, password, address, updated_at) values($1,$2,$3,$4, now()) RETURNING id ,name, email, address
 `
 
 type CreateUserParams struct {
@@ -22,6 +22,7 @@ type CreateUserParams struct {
 }
 
 type CreateUserRow struct {
+	ID      int32
 	Name    sql.NullString
 	Email   sql.NullString
 	Address sql.NullString
@@ -35,7 +36,29 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (CreateU
 		arg.Address,
 	)
 	var i CreateUserRow
-	err := row.Scan(&i.Name, &i.Email, &i.Address)
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.Email,
+		&i.Address,
+	)
+	return i, err
+}
+
+const getUserByEmail = `-- name: GetUserByEmail :one
+select id, name, email from users where email = $1
+`
+
+type GetUserByEmailRow struct {
+	ID    int32
+	Name  sql.NullString
+	Email sql.NullString
+}
+
+func (q *Queries) GetUserByEmail(ctx context.Context, email sql.NullString) (GetUserByEmailRow, error) {
+	row := q.db.QueryRowContext(ctx, getUserByEmail, email)
+	var i GetUserByEmailRow
+	err := row.Scan(&i.ID, &i.Name, &i.Email)
 	return i, err
 }
 

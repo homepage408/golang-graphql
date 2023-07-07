@@ -17,5 +17,7 @@ autobind: []
 
 
 models:
-  User:
+  UserQuery:
+    model: "github.com/golang-graphql/graph/model.AbstracModel"
+  UserMutation:
     model: "github.com/golang-graphql/graph/model.AbstracModel"

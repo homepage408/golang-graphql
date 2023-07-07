@@ -9,23 +9,34 @@ import (
 
 	"github.com/golang-graphql/graph"
 	"github.com/golang-graphql/graph/model"
+	"github.com/golang-graphql/handler"
 )
 
-// SignIn is the resolver for the SignIn field.
-func (r *userResolver) SignIn(ctx context.Context, obj *model.AbstracModel, param *model.SignInParams) (*model.MainResponse, error) {
-	// res := handler.
-
-	return nil, nil
+// CreateUser is the resolver for the CreateUser field.
+func (r *userMutationResolver) CreateUser(ctx context.Context, obj *model.AbstracModel, param *model.SignInParams) (*model.MainResponse, error) {
+	// panic(fmt.Errorf("not implemented: CreateUser - CreateUser"))
+	res, err := handler.GetUsecase().CreateUser(ctx, param)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
 }
 
 // GetUser is the resolver for the GetUser field.
-func (r *userResolver) GetUser(ctx context.Context, obj *model.AbstracModel, param *model.GetUserParam) (*model.MainResponseList, error) {
+func (r *userQueryResolver) GetUser(ctx context.Context, obj *model.AbstracModel, id int) (*model.MainResponse, error) {
 	// panic(fmt.Errorf("not implemented: GetUser - GetUser"))
-	// return handler.GetDetailUser(ctx, param)
-	return nil, nil
+	res, err := handler.GetUsecase().GetDetailUser(ctx, int32(id))
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
 }
 
-// User returns graph.UserResolver implementation.
-func (r *Resolver) User() graph.UserResolver { return &userResolver{r} }
+// UserMutation returns graph.UserMutationResolver implementation.
+func (r *Resolver) UserMutation() graph.UserMutationResolver { return &userMutationResolver{r} }
 
-type userResolver struct{ *Resolver }
+// UserQuery returns graph.UserQueryResolver implementation.
+func (r *Resolver) UserQuery() graph.UserQueryResolver { return &userQueryResolver{r} }
+
+type userMutationResolver struct{ *Resolver }
+type userQueryResolver struct{ *Resolver }

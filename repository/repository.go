@@ -8,7 +8,8 @@ import (
 
 type Repository interface {
 	CreateUser(ctx context.Context, input query.CreateUserParams) (*query.CreateUserRow, error)
-	GetDetailUser(ctx context.Context, input query.GetUserDetailRow) error
+	GetDetailUser(ctx context.Context, ID int32) (*query.GetUserDetailRow, error)
+	GetUserByEmail(ctx context.Context, email string) (*query.GetUserByEmailRow, error)
 }
 
 type repository struct {
