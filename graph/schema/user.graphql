@@ -1,21 +1,21 @@
-type User {
-    GetUser(param: GetUserParam): UserResponseOK
+type UserQuery {
+    GetUser(id: Int!): MainResponse!
 }
 
-union UserResponseOK = UserResponse | Error
-
-input GetUserParam {
-    ID: Int
+type UserMutation {
+    CreateUser(param: SignInParams): MainResponse!
 }
 
-type UserResponse {
-    ID: Int
+input SignInParams {
+    name: String!
+    email: String!
+    password: String!
+    address: String
+}
+
+type UserDataResponse {
+    Id: String
     name: String
     email: String
-    alamat: String
-}
-
-type Error {
-    message: String
-    success: Boolean
+    address: String
 }

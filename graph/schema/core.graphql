@@ -1,0 +1,21 @@
+type Query {
+    User: UserQuery!
+}
+
+type Mutation {
+    User: UserMutation!
+}
+
+type MainResponse {
+    isSuccess: Boolean!
+    message: String!
+    data: UserDataResponse
+    status: Int!
+}
+
+type MainResponseList {
+    isSuccess: Boolean!
+    message: String!
+    data: [UserDataResponse]
+    status: Int!
+}
