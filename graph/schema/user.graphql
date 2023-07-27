@@ -1,9 +1,9 @@
 type UserQuery {
-    GetUser(id: Int!): MainResponse!
+    GetUser(id: Int!): MainResponse! @hasRole(role: ADMIN)
 }
 
 type UserMutation {
-    CreateUser(param: SignInParams): MainResponse!
+    CreateUser(param: SignInParams): MainResponse! @hasRole(role: ADMIN)
 }
 
 input SignInParams {

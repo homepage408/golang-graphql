@@ -3,11 +3,11 @@ module github.com/golang-graphql
 go 1.18
 
 require (
-	github.com/99designs/gqlgen v0.17.34
+	github.com/99designs/gqlgen v0.17.35
 	github.com/gofiber/fiber/v2 v2.42.0
 	github.com/joho/godotenv v1.5.0
 	github.com/valyala/fasthttp v1.44.0
-	github.com/vektah/gqlparser/v2 v2.5.6
+	github.com/vektah/gqlparser/v2 v2.5.7
 )
 
 require (
